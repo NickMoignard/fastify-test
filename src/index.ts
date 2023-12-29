@@ -1,12 +1,13 @@
 import Fastify from 'fastify';
+import { routes } from './modules/hello-world/routes';
+import { dbConnector } from './database';
 
 const fastify = Fastify({
   logger: true,
 });
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
-});
+fastify.register(dbConnector);
+fastify.register(routes);
 
 const start = async () => {
   try {
